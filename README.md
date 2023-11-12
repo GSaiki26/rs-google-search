@@ -1,4 +1,6 @@
 # Rust Google Search
+[![Project build](https://github.com/GSaiki26/rust-google-search/actions/workflows/build.yaml/badge.svg?branch=master)](https://github.com/GSaiki26/rust-google-search/actions/workflows/build.yaml) [![Audit](https://github.com/GSaiki26/rust-google-search/actions/workflows/audit.yaml/badge.svg?branch=master)](https://github.com/GSaiki26/rust-google-search/actions/workflows/audit.yaml)
+
 The Rust Google Search is an exercise program written in Rust. It's a simple WebScraper that'll return the first 5 results from Google, allowing you to choose one. After selecting the source you want, it'll return the main content of the page.
 
 # To do
