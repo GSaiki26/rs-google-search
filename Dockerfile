@@ -5,7 +5,7 @@ WORKDIR /app
 
 # Update the container
 RUN apk upgrade --no-cache --update
-RUN apk add --no-cache musl-dev openssl-dev
+RUN apk add --no-cache musl-dev libressl-dev
 
 # Build the project
 COPY ./src ./src
