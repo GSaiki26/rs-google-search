@@ -5,8 +5,9 @@ The Rust Google Search is an exercise program written in Rust. It's a simple Web
 
 # To do
 - [X] Create the rust workflows;
-- [ ] Request to Google;
-- [ ] Treat the response and get the links;
+- [X] Request to Google;
+- [X] Treat the response and get the links;
+- [ ] Asks the user by the wanted source;
 - [ ] Get all the main content of the selected source;
 - [ ] Print the result into a really nice way;
 - [ ] Build the unit tests.
