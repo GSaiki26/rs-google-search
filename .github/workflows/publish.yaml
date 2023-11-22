@@ -30,4 +30,4 @@ jobs:
 
       - name: Push image:tag to docker hub
         if: contains(github.ref_name, 'v*')
-        run: docker push ${{ secrets.DOCKER_REPO }}:latest
+        run: docker push ${{ secrets.DOCKER_REPO }}:${{github.ref_name}} 
