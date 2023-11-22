@@ -5,7 +5,7 @@ use std::{
 };
 
 use colored::Colorize;
-use config::Config;
+// use config::Config;
 
 use google_entry::GoogleEntry;
 use google_search::search_by;

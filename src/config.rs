@@ -1,4 +1,4 @@
-// Structs
-pub struct Config<'a> {
-    query_selector: &'a str,
-}
+// // Structs
+// pub struct Config<'a> {
+//     query_selector: &'a str,
+// }
