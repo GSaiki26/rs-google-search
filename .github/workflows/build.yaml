@@ -1,4 +1,4 @@
-name: Project build
+name: Docker build
 
 on:
   pull_request:

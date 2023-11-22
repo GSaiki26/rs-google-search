@@ -1,9 +1,12 @@
 // Libs
 use std::fmt::Display;
 
+use clap::Parser;
 use colored::Colorize;
 use reqwest::blocking::Client;
-use tl::{HTMLTag, Parser};
+use tl::{HTMLTag, Parser as TlParser};
+
+use crate::config::Config;
 
 // Structs
 pub struct GoogleEntry {
@@ -13,11 +16,11 @@ pub struct GoogleEntry {
 }
 
 impl GoogleEntry {
-    pub fn new(parser: &Parser, source_tag: &HTMLTag) -> GoogleEntry {
+    pub fn new(parser: &TlParser, source_tag: &HTMLTag) -> GoogleEntry {
         // Get the link and the title.
         let (mut title, mut link) = (String::new(), String::new());
-        Self::get_title(&mut title, parser, source_tag);
-        if Self::get_link(&mut link, parser, source_tag).is_none() {
+        Self::define_title(&mut title, parser, source_tag);
+        if Self::define_link(&mut link, parser, source_tag).is_none() {
             eprintln!("The source tag doesn't have a link or a title.");
             std::process::exit(1);
         }
@@ -45,13 +48,18 @@ impl GoogleEntry {
         let parser = dom.parser();
 
         // Check if the main element exists.
-        let tag_to_search: &str = "body";
-        let tags = dom.query_selector(tag_to_search)?;
+        let args = Config::parse();
+        let tags = dom.query_selector(&args.css_selector)?;
         let mut content: String = String::new();
 
         for tag in tags {
             let text = tag.get(parser)?.inner_text(parser);
             content.push_str(&format!("* {0}\n\n", text.trim()));
+        }
+
+        if content.is_empty() {
+            println!("The current css_selector couldn\'t find anything to scrap on the source.");
+            return None;
         }
 
         self.content = Some(content);
@@ -61,7 +69,7 @@ impl GoogleEntry {
     /**
      * A method to define the link by wraping it from the HTML.
      */
-    fn get_link(buf: &mut String, parser: &Parser, source_tag: &HTMLTag) -> Option<()> {
+    fn define_link(buf: &mut String, parser: &TlParser, source_tag: &HTMLTag) -> Option<()> {
         // Get and treat all the html tree.
         let a_node_handler = source_tag.query_selector(parser, "a")?.next()?;
         let a_tag = a_node_handler.get(parser)?.as_tag()?;
@@ -80,7 +88,7 @@ impl GoogleEntry {
     /**
      * A method to define the title by wraping it from the HTML.
      */
-    fn get_title(buf: &mut String, parser: &Parser, source_tag: &HTMLTag) -> Option<()> {
+    fn define_title(buf: &mut String, parser: &TlParser, source_tag: &HTMLTag) -> Option<()> {
         // Return the unique a node from a page.
         let title_element = source_tag.query_selector(parser, "div.vvjwJb")?.next()?;
 
