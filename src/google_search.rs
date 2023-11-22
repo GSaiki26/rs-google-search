@@ -1,6 +1,7 @@
 // Libs
-use crate::google_entry::GoogleEntry;
 use reqwest::blocking::Client;
+
+use crate::google_entry::GoogleEntry;
 
 // Functions
 /**
